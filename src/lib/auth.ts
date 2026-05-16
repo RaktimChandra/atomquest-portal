@@ -20,15 +20,6 @@ declare module 'next-auth' {
   }
 }
 
-declare module 'next-auth/jwt' {
-  interface JWT {
-    id: string;
-    role: Role;
-    department?: string | null;
-    designation?: string | null;
-  }
-}
-
 export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
   session: { strategy: 'jwt' },
   pages: { signIn: '/login' },
@@ -42,18 +33,14 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
         const email = credentials?.email as string;
         const password = credentials?.password as string;
         if (!email || !password) return null;
-
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) return null;
-
         const ok = await bcrypt.compare(password, user.password);
         if (!ok) return null;
-
         await prisma.user.update({
           where: { id: user.id },
           data: { lastLoginAt: new Date() },
         });
-
         return {
           id: user.id,
           email: user.email,
@@ -69,19 +56,19 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id as string;
-        token.role = user.role;
-        token.department = user.department;
-        token.designation = user.designation;
+        (token as any).id = (user as any).id;
+        (token as any).role = (user as any).role;
+        (token as any).department = (user as any).department;
+        (token as any).designation = (user as any).designation;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id;
-        session.user.role = token.role;
-        session.user.department = token.department;
-        session.user.designation = token.designation;
+      if (session.user) {
+        session.user.id = (token as any).id;
+        session.user.role = (token as any).role;
+        session.user.department = (token as any).department;
+        session.user.designation = (token as any).designation;
       }
       return session;
     },
