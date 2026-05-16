@@ -3,6 +3,7 @@ import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
 import type { Role } from '@prisma/client';
+import { authConfig } from '@/lib/auth.config';
 
 declare module 'next-auth' {
   interface Session {
@@ -21,8 +22,7 @@ declare module 'next-auth' {
 }
 
 export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
-  session: { strategy: 'jwt' },
-  pages: { signIn: '/login' },
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {

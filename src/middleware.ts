@@ -1,23 +1,24 @@
-import { auth } from '@/lib/auth';
+import NextAuth from 'next-auth';
 import { NextResponse } from 'next/server';
+import { authConfig } from '@/lib/auth.config';
+
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const { pathname } = req.nextUrl;
 
-  const isAuthRoute = pathname === '/login' || pathname === '/';
-  const isApiAuthRoute = pathname.startsWith('/api/auth');
+  const isPublic = pathname === '/' || pathname === '/login';
+  const isApiAuth = pathname.startsWith('/api/auth');
 
-  if (isApiAuthRoute) return NextResponse.next();
+  if (isApiAuth) return NextResponse.next();
 
-  if (!isLoggedIn && !isAuthRoute) {
+  if (!isLoggedIn && !isPublic) {
     return NextResponse.redirect(new URL('/login', req.url));
   }
-
   if (isLoggedIn && pathname === '/login') {
     return NextResponse.redirect(new URL('/dashboard', req.url));
   }
-
   return NextResponse.next();
 });
 
