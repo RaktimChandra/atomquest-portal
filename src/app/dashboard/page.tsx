@@ -85,7 +85,7 @@ export default async function DashboardPage() {
   );
 }
 
-function StatCard({ icon: Icon, label, value, hint, color }: { icon: React.ElementType; label: string; value: string | number; hint: string; color: string }) {
+function StatCard({ icon: Icon, label, value, hint, color }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string | number; hint: string; color: string }) {
   return (
     <Card className="relative overflow-hidden">
       <div className={`absolute -top-8 -right-8 h-24 w-24 rounded-full bg-gradient-to-br ${color} opacity-15 blur-2xl`} />
