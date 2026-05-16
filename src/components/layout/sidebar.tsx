@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 type SessionUser = { role: string; name?: string | null; email?: string | null };
 
-const navByRole: Record<string, Array<{ label: string; href: string; icon: React.ElementType }>> = {
+const navByRole: Record<string, Array<{ label: string; href: string; icon: React.ComponentType<{ className?: string }> }>> = {
   EMPLOYEE: [
     { label: 'Overview',     href: '/dashboard',           icon: LayoutDashboard },
     { label: 'My Goals',     href: '/dashboard/goals',     icon: Target },

@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const demoUsers = [
+const demoUsers: { role: string; email: string; name: string; icon: React.ComponentType<{ className?: string }>; color: string }[] = [
   { role: 'Admin / HR', email: 'admin@atomberg.com',    name: 'Priya Sharma',  icon: Shield,  color: 'from-rose-500 to-pink-500' },
   { role: 'Manager',    email: 'manager@atomberg.com',  name: 'Rohan Kapoor',  icon: UserCog, color: 'from-amber-500 to-orange-500' },
   { role: 'Employee',   email: 'employee@atomberg.com', name: 'Arjun Patel',   icon: User2,   color: 'from-emerald-500 to-teal-500' },

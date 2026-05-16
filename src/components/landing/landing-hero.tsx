@@ -6,8 +6,8 @@ import { ArrowRight, Target, TrendingUp, Shield, Sparkles, BarChart3, Zap, Check
 import { Button } from '@/components/ui/button';
 import { AtomOrbit } from './atom-orbit';
 
-const features = [
-  { icon: Target,     title: 'Aligned Goals',       desc: 'Every goal links to a thrust area and rolls up to org priorities.' },
+const features: { icon: React.ComponentType<{ className?: string }>; title: string; desc: string }[] = [
+  { icon: Target as React.ComponentType<{ className?: string }>,     title: 'Aligned Goals',       desc: 'Every goal links to a thrust area and rolls up to org priorities.' },
   { icon: Shield,     title: 'Audit-Ready',         desc: 'Immutable trail of every change, every approval, every check-in.' },
   { icon: TrendingUp, title: 'Real-Time Tracking',  desc: 'Quarterly check-ins with auto-computed progress scores.' },
   { icon: BarChart3,  title: 'Deep Analytics',      desc: 'QoQ trends, heatmaps, and manager effectiveness — at a glance.' },
