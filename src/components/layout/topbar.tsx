@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { Moon, Sun, LogOut, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { NotificationBell } from '@/components/notifications/notification-bell';
 import { initials, ROLE_LABELS } from '@/lib/utils';
 
 type SessionUser = { name?: string | null; email?: string | null; role: string; designation?: string | null };
@@ -25,6 +26,7 @@ export function Topbar({ user }: { user: SessionUser }) {
         </div>
 
         <div className="flex items-center gap-2">
+          <NotificationBell />
           <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
             <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -33,7 +35,7 @@ export function Topbar({ user }: { user: SessionUser }) {
           <div className="flex items-center gap-3 pl-3 ml-1 border-l border-border/40">
             <div className="text-right hidden sm:block">
               <div className="text-sm font-medium leading-tight">{user.name}</div>
-              <div className="text-[11px] text-muted-foreground leading-tight">{ROLE_LABELS[user.role] ?? user.role}{user.designation ? ` · ${user.designation}` : ''}</div>
+              <div className="text-[11px] text-muted-foreground leading-tight">{ROLE_LABELS[user.role] ?? user.role}{user.designation ? ' · ' + user.designation : ''}</div>
             </div>
             <div className="h-9 w-9 rounded-full bg-gradient-to-br from-atom-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold shadow-glow-sm">
               {initials(user.name ?? 'U')}

@@ -77,7 +77,7 @@ export function LoginForm() {
           <Button
             variant="outline"
             className="w-full mb-4 h-11 gap-2"
-            onClick={() => toast.info('Microsoft Entra ID SSO integration is roadmap. Use a demo account below.', { duration: 4000 })}
+            onClick={() => { window.location.href = '/sso'; }}
           >
             <svg className="h-4 w-4" viewBox="0 0 23 23"><path fill="#f25022" d="M1 1h10v10H1z" /><path fill="#7fba00" d="M12 1h10v10H12z" /><path fill="#00a4ef" d="M1 12h10v10H1z" /><path fill="#ffb900" d="M12 12h10v10H12z" /></svg>
             Continue with Microsoft Entra ID
