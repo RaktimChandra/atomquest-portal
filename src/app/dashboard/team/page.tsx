@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScoreGauge } from '@/components/checkins/score-gauge';
-import { ArrowRight, Sparkles, Users } from 'lucide-react';
+import { ArrowRight, Sparkles, Users, Share2 } from 'lucide-react';
 import { initials } from '@/lib/utils';
 import { aggregateScore, currentQuarter, QUARTER_LABELS } from '@/lib/score-engine';
 
@@ -53,12 +53,19 @@ export default async function TeamPage() {
 
   return (
     <div className="space-y-6 max-w-5xl">
-      <div className="space-y-1">
-        <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-atom-400">
-          <Sparkles className="h-3 w-3" /> {cycle.name} · {QUARTER_LABELS[cq].label}
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-atom-400">
+            <Sparkles className="h-3 w-3" /> {cycle.name} · {QUARTER_LABELS[cq].label}
+          </div>
+          <h1 className="font-display text-4xl font-bold tracking-tight text-gradient">My Team</h1>
+          <p className="text-muted-foreground text-sm">Roll-up of your direct reports' approved goals and current-quarter check-ins.</p>
         </div>
-        <h1 className="font-display text-4xl font-bold tracking-tight text-gradient">My Team</h1>
-        <p className="text-muted-foreground text-sm">Roll-up of your direct reports' approved goals and current-quarter check-ins.</p>
+        <Link href="/dashboard/goals/share">
+          <button className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-br from-atom-500 via-atom-600 to-purple-600 text-white px-4 py-2 text-sm font-medium shadow-glow hover:shadow-glow-lg hover:scale-[1.02] active:scale-[0.98] transition-all">
+            <Share2 className="h-4 w-4" /> Share a goal
+          </button>
+        </Link>
       </div>
 
       {teamData.length === 0 ? (
