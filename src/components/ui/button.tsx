@@ -4,23 +4,23 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
         default:
-          'bg-primary text-primary-foreground shadow-glow-sm hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] btn-glow',
+          'bg-foreground text-background hover:bg-foreground/90 active:scale-[0.98]',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
-          'border border-border bg-background/40 backdrop-blur hover:bg-accent hover:text-accent-foreground',
+          'border border-border bg-background hover:bg-accent hover:text-accent-foreground',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
-        glass: 'glass hover:bg-white/[0.06] text-foreground',
+        glass: 'glass hover:bg-foreground/[0.04] text-foreground',
         gradient:
-          'bg-gradient-to-br from-atom-500 via-atom-600 to-purple-600 text-white shadow-glow hover:shadow-glow-lg hover:scale-[1.02] active:scale-[0.98] btn-glow',
+          'bg-brand text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02] active:scale-[0.98]',
       },
       size: {
         default: 'h-10 px-4 py-2',
