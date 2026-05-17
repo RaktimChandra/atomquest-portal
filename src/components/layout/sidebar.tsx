@@ -3,33 +3,48 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, Target, ClipboardCheck, BarChart3, Users, Settings, FileText, Bell, Sparkles } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Target,
+  ClipboardCheck,
+  BarChart3,
+  Users,
+  Settings,
+  FileText,
+  Bell,
+  Sparkles,
+  type LucideIcon,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type SessionUser = { role: string; name?: string | null; email?: string | null };
 
-const navByRole: Record<string, Array<{ label: string; href: string; icon: React.ComponentType<{ className?: string }> }>> = {
+type NavItem = { label: string; href: string; icon: LucideIcon };
+
+const navByRole: Record<string, NavItem[]> = {
   EMPLOYEE: [
-    { label: 'Overview',     href: '/dashboard',           icon: LayoutDashboard },
-    { label: 'My Goals',     href: '/dashboard/goals',     icon: Target },
-    { label: 'Check-ins',    href: '/dashboard/checkins',  icon: ClipboardCheck },
+    { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+    { label: 'My Goals', href: '/dashboard/goals', icon: Target },
+    { label: 'Check-ins', href: '/dashboard/checkins', icon: ClipboardCheck },
+    { label: 'Audit Log', href: '/dashboard/audit', icon: FileText },
     { label: 'Notifications', href: '/dashboard/notifications', icon: Bell },
   ],
   MANAGER: [
-    { label: 'Overview',     href: '/dashboard',           icon: LayoutDashboard },
-    { label: 'My Goals',     href: '/dashboard/goals',     icon: Target },
-    { label: 'Team',         href: '/dashboard/team',      icon: Users },
-    { label: 'Approvals',    href: '/dashboard/approvals', icon: ClipboardCheck },
-    { label: 'Analytics',    href: '/dashboard/analytics', icon: BarChart3 },
+    { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+    { label: 'My Goals', href: '/dashboard/goals', icon: Target },
+    { label: 'Team', href: '/dashboard/team', icon: Users },
+    { label: 'Approvals', href: '/dashboard/approvals', icon: ClipboardCheck },
+    { label: 'Completion', href: '/dashboard/completion', icon: BarChart3 },
+    { label: 'Audit Log', href: '/dashboard/audit', icon: FileText },
     { label: 'Notifications', href: '/dashboard/notifications', icon: Bell },
   ],
   ADMIN: [
-    { label: 'Overview',     href: '/dashboard',           icon: LayoutDashboard },
-    { label: 'Cycles',       href: '/dashboard/cycles',    icon: Settings },
-    { label: 'Org',          href: '/dashboard/org',       icon: Users },
-    { label: 'Analytics',    href: '/dashboard/analytics', icon: BarChart3 },
-    { label: 'Audit Log',    href: '/dashboard/audit',     icon: FileText },
-    { label: 'Escalations',  href: '/dashboard/escalations', icon: Bell },
+    { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+    { label: 'Cycles', href: '/dashboard/cycles', icon: Settings },
+    { label: 'Org', href: '/dashboard/org', icon: Users },
+    { label: 'Completion', href: '/dashboard/completion', icon: BarChart3 },
+    { label: 'Audit Log', href: '/dashboard/audit', icon: FileText },
+    { label: 'Escalations', href: '/dashboard/escalations', icon: Bell },
   ],
 };
 
@@ -44,7 +59,12 @@ export function Sidebar({ user }: { user: SessionUser }) {
           <div className="relative h-8 w-8">
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-atom-400 to-atom-600 blur-md opacity-60" />
             <div className="relative h-8 w-8 rounded-full bg-gradient-to-br from-atom-500 to-atom-700 flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="h-5 w-5 text-white"><circle cx="12" cy="12" r="2" fill="currentColor" /><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" /><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" transform="rotate(60 12 12)" /><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" transform="rotate(120 12 12)" /></svg>
+              <svg viewBox="0 0 24 24" className="h-5 w-5 text-white">
+                <circle cx="12" cy="12" r="2" fill="currentColor" />
+                <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" transform="rotate(60 12 12)" />
+                <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" transform="rotate(120 12 12)" />
+              </svg>
             </div>
           </div>
           <div>
@@ -57,6 +77,7 @@ export function Sidebar({ user }: { user: SessionUser }) {
       <nav className="flex-1 p-4 space-y-1">
         {nav.map((item) => {
           const active = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+          const ItemIcon = item.icon;
           return (
             <Link
               key={item.href}
@@ -73,7 +94,7 @@ export function Sidebar({ user }: { user: SessionUser }) {
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
-              <item.icon className={cn('relative h-4 w-4', active && 'text-atom-400')} />
+              <ItemIcon className={cn('relative h-4 w-4', active && 'text-atom-400')} />
               <span className="relative">{item.label}</span>
             </Link>
           );
